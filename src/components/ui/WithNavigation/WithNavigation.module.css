@@ -1,0 +1,123 @@
+/**
+ * ナビゲーションレール・ナビゲーションドロワー付きレイアウトのスタイル
+**/
+.main-content {
+    min-height: 100%;
+    flex-grow: 1;
+}
+
+/* region ナビゲーションレール */
+
+.navigation {
+    height: 100%;
+    width: var(--navigation-rail-width);
+    background-color: var(--theme-color-surface-2);
+    color: var(--theme-color-on-surface);
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    flex-direction: column;
+}
+
+.navigation-body {
+    flex-grow: 1;
+}
+
+.navigation-list {
+    margin-left: 2px;
+    margin-right: 2px;
+    padding: 0;
+}
+
+.navigation-list-item {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 56px;
+    flex-direction: column;
+}
+
+.navigation-list .navigation-list-item:not(:last-of-type) {
+    margin-bottom: 16px;
+}
+
+.navigation-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.navigation-link-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    width: 56px;
+    text-align: center;
+    transition-duration: 300ms;
+    border-radius: 16px;
+    font-variation-settings: 'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.navigation-link .navigation-link-icon {
+    font-size: var(--icon-base);
+}
+
+.navigation-link-label {
+    width: 100%;
+    text-align: center;
+    font-size: var(--text-xs);
+    transition-duration: 300ms;
+}
+
+.navigation-link:hover {
+    .navigation-link-icon {
+        background-color: var(--theme-color-surface-variant);
+        font-weight: 700;
+    }
+
+    .navigation-link-label {
+        font-weight: 700;
+    }
+}
+
+.navigation-list-item.active {
+    .navigation-link-icon {
+        background-color: var(--theme-color-secondary-container);
+        font-weight: bold;
+    }
+
+    .navigation-link-label {
+        font-weight: 700;
+    }
+}
+
+/* endregion ナビゲーションレール */
+
+/*region ドロワー*/
+.navigation-drawer {
+    --add: 10px;
+    position: fixed;
+    top: 0;
+    left: calc(calc(-240px + var(--navigation-rail-width)) - var(--add));
+    z-index: 500;
+    background-color: var(--theme-color-surface-2);
+    width: 240px;
+    height: 100%;
+    border-radius: 0 16px 16px 0;
+    border-left: 1px solid var(--theme-color-surface-variant);
+    box-shadow: var(--theme-elevation-2);
+    transition-duration: 300ms;
+}
+
+.navigation-drawer.open{
+    transform: translateX(calc(240px + var(--add)));
+}
+
+/*endregion ドロワー*/
