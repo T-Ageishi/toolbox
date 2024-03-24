@@ -154,6 +154,10 @@
     background-color: var(--theme-color-surface-variant);
 }
 
+.drawer-link.active {
+    background-color: var(--theme-color-secondary-container);
+}
+
 .drawer-link-label {
     text-align: center;
     font-size: var(--text-xs);

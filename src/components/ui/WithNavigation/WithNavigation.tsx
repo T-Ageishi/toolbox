@@ -7,15 +7,14 @@ import {navigationData} from './data';
 
 
 const invalidId: number = -1;
-// 隣接リストの木構造でメニューのIDをまとめる
+// 隣接リストの木構造でメニューのIDをまとめる。有向グラフ。
 const idTree: { [key: number]: number[] } = {};
 const structIdTree = (parentId: number, settings: Setting[]): void => {
 	settings.forEach(setting => {
 		if (idTree[parentId] === undefined) idTree[parentId] = [];
 		if (idTree[setting.id] === undefined) idTree[setting.id] = [setting.id];
 
-		idTree[parentId] = [...idTree[parentId], setting.id];
-		idTree[setting.id] = [...idTree[setting.id], parentId];
+		idTree[setting.id] = [...idTree[parentId], ...idTree[setting.id], parentId];
 
 		if (setting.children.length > 0) {
 			structIdTree(setting.id, setting.children);
@@ -61,7 +60,7 @@ export default function WithNavigation({children, activeMenuId}: { children: Rea
 					/>
 					<NavigationFooter/>
 				</nav>
-				<NavigationDrawer hoverId={hoverId}/>
+				<NavigationDrawer activeMenuId={activeMenuId} hoverId={hoverId}/>
 			</div>
 			<main className={styles['main-content']}>
 				{children}
@@ -115,9 +114,11 @@ function NavigationFooter(): React.ReactNode {
 	return <div className="navigation-footer"></div>;
 }
 
-function NavigationDrawer({hoverId}: { hoverId: number }): React.ReactNode {
+function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenuId: number; }): React.ReactNode {
 	let className = styles['navigation-drawer'];
 	let drawerContents: Setting[] = [];
+
+	// @@todo ドロワーの中身の取得方法を直す
 	if (hoverId !== invalidId) {
 		className += ` ${styles['open']}`;
 		const [setting] = navigationData.filter(setting => setting.id === 2);
@@ -131,7 +132,14 @@ function NavigationDrawer({hoverId}: { hoverId: number }): React.ReactNode {
 					drawerContents.map(setting => (
 						<Fragment key={setting.id}>
 							<li className={styles['drawer-list-item']}>
-								<a className={styles['drawer-link']} href={setting.path}>
+								<a
+									href={setting.path}
+									className={
+										(idTree[activeMenuId].includes(setting.id))
+											? `${styles['drawer-link']} ${styles['active']}`
+											: styles['drawer-link']
+									}
+								>
 									<div className={styles['drawer-link-label']}>{setting.label}</div>
 								</a>
 							</li>
