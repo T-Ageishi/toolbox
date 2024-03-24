@@ -71,10 +71,16 @@ export default function WithNavigation({children, activeMenuId}: { children: Rea
 	);
 }
 
+/**
+ * ナビゲーションのヘッダー
+ */
 function NavigationHeader(): React.ReactNode {
 	return <div className={styles['navigation-header']}></div>;
 }
 
+/**
+ * ナビゲーションのボディ
+ */
 function NavigationBody({
 	settings,
 	activeMenuId,
@@ -112,27 +118,47 @@ function NavigationBody({
 	);
 }
 
+/**
+ * ナビゲーションのフッター
+ */
 function NavigationFooter(): React.ReactNode {
 	return <div className="navigation-footer"></div>;
 }
 
-function initSearched() {
+/**
+ * 探索済みかどうかを示すオブジェクトを初期化する
+ */
+function initSearched(): { [id: number]: boolean } {
 	const ret: { [id: number]: boolean } = {};
 	Object.keys(idTree).forEach(id => ret[Number(id)] = false);
 	return ret;
 }
 
-function findParent(searched: { [id: number]: boolean }, activeMenuId: number) {
-	searched[activeMenuId] = true;
-	if (idTree[activeMenuId].length === 1 && idTree[activeMenuId].includes(activeMenuId)) return activeMenuId;
+/**
+ * targetの親を探す
+ */
+function findParent(searched: { [id: number]: boolean }, target: number) {
+	searched[target] = true;
+	if (idTree[target].length === 1 && idTree[target].includes(target)) return target;
 
-	for (const id of idTree[activeMenuId]) {
+	for (const id of idTree[target]) {
 		if (searched[id]) continue;
-		if (id === activeMenuId) continue;
+		if (id === target) continue;
 		return findParent(searched, id);
 	}
 }
 
+/**
+ * targetはbaseの親かどうかを調べる
+ */
+function isParent(target: number, base: number) {
+	//@@todo dfsを使って親を探索するように修正する
+	return target < base;
+}
+
+/**
+ * ナビゲーションドロワー
+ */
 function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenuId: number; }): React.ReactNode {
 	let drawerClassName = styles['navigation-drawer'];
 	let targetMenuId = hoverId;
@@ -190,8 +216,4 @@ function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenu
 			</ul>
 		</div>
 	);
-}
-
-function isParent(target: number, base: number) {
-	return target < base;
 }
