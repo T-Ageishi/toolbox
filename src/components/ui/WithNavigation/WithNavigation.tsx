@@ -13,6 +13,7 @@ type Setting = {
 type MouseEnterHandlerType = (id: number) => void;
 type MouseMoveHandlerType = (event: React.MouseEvent<HTMLElement>) => void;
 
+const invalidId = -1;
 const settings: Setting[] = [
 	{id: 1, label: 'ホーム', icon: 'Home', path: '/', children: []},
 	{
@@ -26,17 +27,22 @@ const settings: Setting[] = [
 /**
  * ナビゲーションドロワー付きのレイアウト
  */
-export default function WithNavigation({children}: { children: React.ReactNode; }) {
-	const [activeId, setActiveId] = useState(-1);
+export default function WithNavigation({
+	children,
+	activeId //現在選択されているメニューのid
+}: {
+	children: React.ReactNode;
+	activeId: number;
+}) {
+	const [hoverId, setHoverId] = useState(invalidId);
 
 	//ナビゲーションのリンクにポインターが重なったときのイベントハンドラ
 	const handleMouseEnter: MouseEnterHandlerType = id => {
-		const [setting] = settings.filter(s => s['id'] === id);
-		if (setting['children'].length === 0) {
-			if (activeId !== -1) setActiveId(-1);
-		} else {
-			setActiveId(id);
-		}
+		const [setting] = settings.filter(s => s.id === id);
+		const size = setting.children.length;
+
+		if (size === 0 && hoverId !== invalidId) setHoverId(invalidId);
+		else if (size > 0 && id !== hoverId) setHoverId(id);
 	};
 
 	const handlePointerMove: MouseMoveHandlerType = event => {
@@ -44,7 +50,7 @@ export default function WithNavigation({children}: { children: React.ReactNode; 
 			const containerSelector = '.navigation-container';
 			const target = event.target as HTMLElement;
 			const elm = target.closest(containerSelector);
-			if (elm === null) setActiveId(-1);
+			if (elm === null) setHoverId(invalidId);
 		}, 500)();
 	};
 
@@ -55,11 +61,12 @@ export default function WithNavigation({children}: { children: React.ReactNode; 
 					<NavigationHeader/>
 					<NavigationBody
 						settings={settings}
+						activeId={activeId}
 						handleMouseEnter={handleMouseEnter}
 					/>
 					<NavigationFooter/>
 				</nav>
-				<NavigationDrawer activeId={activeId}/>
+				<NavigationDrawer hoverId={hoverId}/>
 			</div>
 			<main className={styles['main-content']}>
 				{children}
@@ -70,15 +77,18 @@ export default function WithNavigation({children}: { children: React.ReactNode; 
 
 function NavigationBody({
 	settings,
+	activeId,
 	handleMouseEnter,
 }: {
-	settings: Setting[],
-	handleMouseEnter: MouseEnterHandlerType,
+	settings: Setting[];
+	activeId: number;
+	handleMouseEnter: MouseEnterHandlerType;
 }): React.ReactNode {
 	return (
 		<div className={styles['navigation-body']}>
 			<NavigationList
 				settings={settings}
+				activeId={activeId}
 				handleMouseEnter={handleMouseEnter}
 			/>
 		</div>
@@ -87,10 +97,12 @@ function NavigationBody({
 
 function NavigationList({
 	settings,
+	activeId,
 	handleMouseEnter,
 }: {
-	settings: Setting[],
-	handleMouseEnter: MouseEnterHandlerType,
+	settings: Setting[];
+	activeId: number;
+	handleMouseEnter: MouseEnterHandlerType;
 }): React.ReactNode {
 	return (
 		<ul className={styles['navigation-list']}>
@@ -98,7 +110,11 @@ function NavigationList({
 				settings.map(setting => (
 					<Fragment key={setting.id}>
 						<li
-							className={styles['navigation-list-item']}
+							className={
+								(setting.id === activeId)
+									? `${styles['navigation-list-item']} ${styles['active']}`
+									: styles['navigation-list-item']
+							}
 							onMouseEnter={() => handleMouseEnter(setting.id)}
 						>
 							<a className={styles['navigation-link']} href={setting.path}>
@@ -114,14 +130,31 @@ function NavigationList({
 	);
 }
 
-function NavigationDrawer({activeId}: { activeId: number }): React.ReactNode {
+function NavigationDrawer({hoverId}: { hoverId: number }): React.ReactNode {
 	let className = styles['navigation-drawer'];
-	if (activeId !== -1) {
+	let drawerContents: Setting[] = [];
+	if (hoverId !== invalidId) {
 		className += ` ${styles['open']}`;
+		const [setting] = settings.filter(setting => setting.id === 2);
+		drawerContents = [...setting.children];
 	}
 
 	return (
-		<div className={`${className}`}></div>
+		<div className={`${className}`}>
+			<ul className={styles['drawer-list']}>
+				{
+					drawerContents.map(setting => (
+						<Fragment key={setting.id}>
+							<li className={styles['drawer-list-item']}>
+								<a className={styles['drawer-link']} href={setting.path}>
+									<div className={styles['drawer-link-label']}>{setting.label}</div>
+								</a>
+							</li>
+						</Fragment>
+					))
+				}
+			</ul>
+		</div>
 	);
 }
 

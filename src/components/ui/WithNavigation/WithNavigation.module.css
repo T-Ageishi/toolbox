@@ -120,4 +120,44 @@
     transform: translateX(calc(240px + var(--add)));
 }
 
+.drawer-list {
+    padding: 0 8px;
+    width: 100%;
+}
+
+.drawer-list-item {
+    height: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.drawer-list .drawer-list-item:not(:last-of-type) {
+    margin-bottom: 16px;
+}
+
+.drawer-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    margin: 0 8px;
+    padding: 8px 16px;
+    border-radius: 24px;
+    transition-duration: 200ms;
+}
+
+.drawer-link:hover {
+    background-color: var(--theme-color-surface-variant);
+}
+
+.drawer-link-label {
+    text-align: center;
+    font-size: var(--text-xs);
+    transition-duration: 300ms;
+}
+
 /*endregion ドロワー*/
