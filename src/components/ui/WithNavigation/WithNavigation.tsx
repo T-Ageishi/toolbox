@@ -14,7 +14,9 @@ const structIdTree = (parentId: number, settings: Setting[]): void => {
 		if (idTree[parentId] === undefined) idTree[parentId] = [];
 		if (idTree[setting.id] === undefined) idTree[setting.id] = [setting.id];
 
-		idTree[setting.id] = [...idTree[parentId], ...idTree[setting.id], parentId];
+		const st = new Set([...idTree[parentId], ...idTree[setting.id]]);
+		if (parentId !== 0) st.add(parentId);
+		idTree[setting.id] = Array.from(st);
 
 		if (setting.children.length > 0) {
 			structIdTree(setting.id, setting.children);
@@ -114,16 +116,54 @@ function NavigationFooter(): React.ReactNode {
 	return <div className="navigation-footer"></div>;
 }
 
-function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenuId: number; }): React.ReactNode {
-	const [currentSetting] = navigationData.filter(setting => setting.id === hoverId);
-	let drawerContents: Setting[] = [];
-	if (currentSetting !== undefined) {
-		drawerContents = [...currentSetting.children];
-	}
+function initSearched() {
+	const ret: { [id: number]: boolean } = {};
+	Object.keys(idTree).forEach(id => ret[Number(id)] = false);
+	return ret;
+}
 
+function findParent(searched: { [id: number]: boolean }, activeMenuId: number) {
+	searched[activeMenuId] = true;
+	if (idTree[activeMenuId].length === 1 && idTree[activeMenuId].includes(activeMenuId)) return activeMenuId;
+
+	for (const id of idTree[activeMenuId]) {
+		if (searched[id]) continue;
+		if (id === activeMenuId) continue;
+		return findParent(searched, id);
+	}
+}
+
+function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenuId: number; }): React.ReactNode {
 	let drawerClassName = styles['navigation-drawer'];
-	if (hoverId !== invalidId) {
-		drawerClassName += ` ${styles['open']}`;
+	let targetMenuId = hoverId;
+	let drawerContents: Setting[] = [];
+	let currentSetting: Setting | undefined;
+
+	/**
+	 * ナビゲーションドロワーが開いているパターン
+	 * ・hoverIdがinvalidIdのとき
+	 * 　・activeMenuIdから一番上の親（＊）を取得して、＊が２階層目のメニューを持っているとき
+	 * ・hoverIdがinvalidIdでないとき
+	 * 　・hoverIdが２階層目のメニューを持っているとき
+	 */
+	if (targetMenuId === invalidId) {
+		const searched = initSearched();
+		const topParent = findParent(searched, activeMenuId);
+		[currentSetting] = navigationData.filter(setting => setting.id === topParent);
+
+		if (currentSetting !== undefined && currentSetting.children.length > 0) {
+			drawerContents = [...currentSetting.children];
+			targetMenuId = activeMenuId;
+			drawerClassName += ` ${styles['open']}`;
+		}
+	} else {
+		if (isParent(hoverId, activeMenuId)) targetMenuId = activeMenuId;
+		[currentSetting] = navigationData.filter(setting => setting.id === hoverId);
+
+		if (currentSetting !== undefined) {
+			drawerContents = [...currentSetting.children];
+			drawerClassName += ` ${styles['open']}`;
+		}
 	}
 
 	return (
@@ -136,7 +176,7 @@ function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenu
 								<a
 									href={setting.path}
 									className={
-										(idTree[hoverId].includes(setting.id))
+										(idTree[targetMenuId].includes(setting.id))
 											? `${styles['drawer-link']} ${styles['active']}`
 											: styles['drawer-link']
 									}
@@ -150,4 +190,8 @@ function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenu
 			</ul>
 		</div>
 	);
+}
+
+function isParent(target: number, base: number) {
+	return target < base;
 }
