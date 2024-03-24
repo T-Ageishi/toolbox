@@ -116,7 +116,7 @@
     transition-duration: 300ms;
 }
 
-.navigation-drawer.open{
+.navigation-drawer.open {
     transform: translateX(calc(240px + var(--add)));
 }
 
