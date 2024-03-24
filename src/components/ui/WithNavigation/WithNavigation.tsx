@@ -115,18 +115,19 @@ function NavigationFooter(): React.ReactNode {
 }
 
 function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenuId: number; }): React.ReactNode {
-	let className = styles['navigation-drawer'];
+	const [currentSetting] = navigationData.filter(setting => setting.id === hoverId);
 	let drawerContents: Setting[] = [];
+	if (currentSetting !== undefined) {
+		drawerContents = [...currentSetting.children];
+	}
 
-	// @@todo ドロワーの中身の取得方法を直す
+	let drawerClassName = styles['navigation-drawer'];
 	if (hoverId !== invalidId) {
-		className += ` ${styles['open']}`;
-		const [setting] = navigationData.filter(setting => setting.id === 2);
-		drawerContents = [...setting.children];
+		drawerClassName += ` ${styles['open']}`;
 	}
 
 	return (
-		<div className={`${className}`}>
+		<div className={`${drawerClassName}`}>
 			<ul className={styles['drawer-list']}>
 				{
 					drawerContents.map(setting => (
@@ -135,7 +136,7 @@ function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenu
 								<a
 									href={setting.path}
 									className={
-										(idTree[activeMenuId].includes(setting.id))
+										(idTree[hoverId].includes(setting.id))
 											? `${styles['drawer-link']} ${styles['active']}`
 											: styles['drawer-link']
 									}
