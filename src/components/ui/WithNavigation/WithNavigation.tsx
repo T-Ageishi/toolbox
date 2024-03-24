@@ -2,43 +2,38 @@
 import styles from "./WithNavigation.module.css";
 import React, {Fragment, useState} from "react";
 import {throttle} from "./../../util/throttle";
+import {Setting, MouseEnterHandlerType, MouseMoveHandlerType} from './types';
+import {navigationData} from './data';
 
-type Setting = {
-	id: number;
-	label: string;
-	icon: string;
-	path: string;
-	children: Setting[];
+
+const invalidId: number = -1;
+// 隣接リストの木構造でメニューのIDをまとめる
+const idTree: { [key: number]: number[] } = {};
+const structIdTree = (parentId: number, settings: Setting[]): void => {
+	settings.forEach(setting => {
+		if (idTree[parentId] === undefined) idTree[parentId] = [];
+		if (idTree[setting.id] === undefined) idTree[setting.id] = [setting.id];
+
+		idTree[parentId] = [...idTree[parentId], setting.id];
+		idTree[setting.id] = [...idTree[setting.id], parentId];
+
+		if (setting.children.length > 0) {
+			structIdTree(setting.id, setting.children);
+		}
+	});
 };
-type MouseEnterHandlerType = (id: number) => void;
-type MouseMoveHandlerType = (event: React.MouseEvent<HTMLElement>) => void;
+structIdTree(0, navigationData);
 
-const invalidId = -1;
-const settings: Setting[] = [
-	{id: 1, label: 'ホーム', icon: 'Home', path: '/', children: []},
-	{
-		id: 2, label: '開発', icon: 'Code', path: '/development', children: [
-			{id: 3, label: 'base64 encode/decode', icon: '', path: '/development/base64', children: []},
-			{id: 4, label: 'PHP serialize/unserialize', icon: '', path: '/development/serialize', children: []},
-		]
-	},
-];
 
 /**
  * ナビゲーションドロワー付きのレイアウト
  */
-export default function WithNavigation({
-	children,
-	activeId //現在選択されているメニューのid
-}: {
-	children: React.ReactNode;
-	activeId: number;
-}) {
+export default function WithNavigation({children, activeMenuId}: { children: React.ReactNode; activeMenuId: number; }) {
 	const [hoverId, setHoverId] = useState(invalidId);
 
 	//ナビゲーションのリンクにポインターが重なったときのイベントハンドラ
 	const handleMouseEnter: MouseEnterHandlerType = id => {
-		const [setting] = settings.filter(s => s.id === id);
+		const [setting] = navigationData.filter(s => s.id === id);
 		const size = setting.children.length;
 
 		if (size === 0 && hoverId !== invalidId) setHoverId(invalidId);
@@ -60,8 +55,8 @@ export default function WithNavigation({
 				<nav className={styles['navigation']}>
 					<NavigationHeader/>
 					<NavigationBody
-						settings={settings}
-						activeId={activeId}
+						settings={navigationData}
+						activeMenuId={activeMenuId}
 						handleMouseEnter={handleMouseEnter}
 					/>
 					<NavigationFooter/>
@@ -81,11 +76,11 @@ function NavigationHeader(): React.ReactNode {
 
 function NavigationBody({
 	settings,
-	activeId,
+	activeMenuId,
 	handleMouseEnter,
 }: {
 	settings: Setting[];
-	activeId: number;
+	activeMenuId: number;
 	handleMouseEnter: MouseEnterHandlerType;
 }): React.ReactNode {
 	return (
@@ -96,7 +91,7 @@ function NavigationBody({
 						<Fragment key={setting.id}>
 							<li
 								className={
-									(setting.id === activeId)
+									(idTree[activeMenuId].includes(setting.id))
 										? `${styles['navigation-list-item']} ${styles['active']}`
 										: styles['navigation-list-item']
 								}
@@ -125,7 +120,7 @@ function NavigationDrawer({hoverId}: { hoverId: number }): React.ReactNode {
 	let drawerContents: Setting[] = [];
 	if (hoverId !== invalidId) {
 		className += ` ${styles['open']}`;
-		const [setting] = settings.filter(setting => setting.id === 2);
+		const [setting] = navigationData.filter(setting => setting.id === 2);
 		drawerContents = [...setting.children];
 	}
 
