@@ -5,8 +5,9 @@ import {throttle} from "./../../util/throttle";
 import {Setting, MouseEnterHandlerType, MouseMoveHandlerType} from './types';
 import {navigationData} from './data';
 
-
+//初期化したりする用のメニューID
 const invalidId: number = -1;
+
 // 隣接リストの木構造でメニューのIDをまとめる。有向グラフ。
 const idTree: { [key: number]: number[] } = {};
 const structIdTree = (parentId: number, settings: Setting[]): void => {
