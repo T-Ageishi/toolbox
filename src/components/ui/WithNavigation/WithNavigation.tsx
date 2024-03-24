@@ -75,6 +75,10 @@ export default function WithNavigation({
 	);
 }
 
+function NavigationHeader(): React.ReactNode {
+	return <div className={styles['navigation-header']}></div>;
+}
+
 function NavigationBody({
 	settings,
 	activeId,
@@ -86,48 +90,34 @@ function NavigationBody({
 }): React.ReactNode {
 	return (
 		<div className={styles['navigation-body']}>
-			<NavigationList
-				settings={settings}
-				activeId={activeId}
-				handleMouseEnter={handleMouseEnter}
-			/>
+			<ul className={styles['navigation-list']}>
+				{
+					settings.map(setting => (
+						<Fragment key={setting.id}>
+							<li
+								className={
+									(setting.id === activeId)
+										? `${styles['navigation-list-item']} ${styles['active']}`
+										: styles['navigation-list-item']
+								}
+								onMouseEnter={() => handleMouseEnter(setting.id)}
+							>
+								<a className={styles['navigation-link']} href={setting.path}>
+									<div
+										className={`${styles['navigation-link-icon']} material-symbols-outlined`}>{setting.icon}</div>
+									<div className={styles['navigation-link-label']}>{setting.label}</div>
+								</a>
+							</li>
+						</Fragment>
+					))
+				}
+			</ul>
 		</div>
 	);
 }
 
-function NavigationList({
-	settings,
-	activeId,
-	handleMouseEnter,
-}: {
-	settings: Setting[];
-	activeId: number;
-	handleMouseEnter: MouseEnterHandlerType;
-}): React.ReactNode {
-	return (
-		<ul className={styles['navigation-list']}>
-			{
-				settings.map(setting => (
-					<Fragment key={setting.id}>
-						<li
-							className={
-								(setting.id === activeId)
-									? `${styles['navigation-list-item']} ${styles['active']}`
-									: styles['navigation-list-item']
-							}
-							onMouseEnter={() => handleMouseEnter(setting.id)}
-						>
-							<a className={styles['navigation-link']} href={setting.path}>
-								<div
-									className={`${styles['navigation-link-icon']} material-symbols-outlined`}>{setting.icon}</div>
-								<div className={styles['navigation-link-label']}>{setting.label}</div>
-							</a>
-						</li>
-					</Fragment>
-				))
-			}
-		</ul>
-	);
+function NavigationFooter(): React.ReactNode {
+	return <div className="navigation-footer"></div>;
 }
 
 function NavigationDrawer({hoverId}: { hoverId: number }): React.ReactNode {
@@ -156,12 +146,4 @@ function NavigationDrawer({hoverId}: { hoverId: number }): React.ReactNode {
 			</ul>
 		</div>
 	);
-}
-
-function NavigationHeader(): React.ReactNode {
-	return <div className={styles['navigation-header']}></div>;
-}
-
-function NavigationFooter(): React.ReactNode {
-	return <div className="navigation-footer"></div>;
 }
