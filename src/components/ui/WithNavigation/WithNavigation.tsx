@@ -7,25 +7,7 @@ import {navigationData} from './data';
 
 //初期化したりする用のメニューID
 const invalidId: number = -1;
-
-// 隣接リストの木構造でメニューのIDをまとめる。有向グラフ。
-const idTree: { [key: number]: number[] } = {};
-const structIdTree = (parentId: number, settings: Setting[]): void => {
-	settings.forEach(setting => {
-		if (idTree[parentId] === undefined) idTree[parentId] = [];
-		if (idTree[setting.id] === undefined) idTree[setting.id] = [setting.id];
-
-		const st = new Set([...idTree[parentId], ...idTree[setting.id]]);
-		if (parentId !== 0) st.add(parentId);
-		idTree[setting.id] = Array.from(st);
-
-		if (setting.children.length > 0) {
-			structIdTree(setting.id, setting.children);
-		}
-	});
-};
-structIdTree(0, navigationData);
-
+const parents = collectParents(null, navigationData, []);
 
 /**
  * ナビゲーションドロワー付きのレイアウト
@@ -52,8 +34,8 @@ export default function WithNavigation({children, activeMenuId}: { children: Rea
 	};
 
 	return (
-		<div id="root" onPointerMove={event => handlePointerMove(event)}>
-			<div className="navigation-container">
+		<div id='root' onPointerMove={event => handlePointerMove(event)}>
+			<div className='navigation-container'>
 				<nav className={styles['navigation']}>
 					<NavigationHeader/>
 					<NavigationBody
@@ -83,13 +65,9 @@ function NavigationHeader(): React.ReactNode {
  * ナビゲーションのボディ
  */
 function NavigationBody({
-	settings,
-	activeMenuId,
-	handleMouseEnter,
+	settings, activeMenuId, handleMouseEnter,
 }: {
-	settings: Setting[];
-	activeMenuId: number;
-	handleMouseEnter: MouseEnterHandlerType;
+	settings: Setting[]; activeMenuId: number; handleMouseEnter: MouseEnterHandlerType;
 }): React.ReactNode {
 	return (
 		<div className={styles['navigation-body']}>
@@ -99,7 +77,7 @@ function NavigationBody({
 						<Fragment key={setting.id}>
 							<li
 								className={
-									(idTree[activeMenuId].includes(setting.id))
+									(parents[activeMenuId].has(setting.id) || activeMenuId === setting.id)
 										? `${styles['navigation-list-item']} ${styles['active']}`
 										: styles['navigation-list-item']
 								}
@@ -127,70 +105,17 @@ function NavigationFooter(): React.ReactNode {
 }
 
 /**
- * 探索済みかどうかを示すオブジェクトを初期化する
- */
-function initSearched(): { [id: number]: boolean } {
-	const ret: { [id: number]: boolean } = {};
-	Object.keys(idTree).forEach(id => ret[Number(id)] = false);
-	return ret;
-}
-
-/**
- * targetの親を探す
- */
-function findParent(searched: { [id: number]: boolean }, target: number) {
-	searched[target] = true;
-	if (idTree[target].length === 1 && idTree[target].includes(target)) return target;
-
-	for (const id of idTree[target]) {
-		if (searched[id]) continue;
-		if (id === target) continue;
-		return findParent(searched, id);
-	}
-}
-
-/**
- * targetはbaseの親かどうかを調べる
- */
-function isParent(target: number, base: number) {
-	//@@todo dfsを使って親を探索するように修正する
-	return target < base;
-}
-
-/**
  * ナビゲーションドロワー
  */
 function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenuId: number; }): React.ReactNode {
 	let drawerClassName = styles['navigation-drawer'];
-	let targetMenuId = hoverId;
 	let drawerContents: Setting[] = [];
 	let currentSetting: Setting | undefined;
 
-	/**
-	 * ナビゲーションドロワーが開いているパターン
-	 * ・hoverIdがinvalidIdのとき
-	 * 　・activeMenuIdから一番上の親（＊）を取得して、＊が２階層目のメニューを持っているとき
-	 * ・hoverIdがinvalidIdでないとき
-	 * 　・hoverIdが２階層目のメニューを持っているとき
-	 */
-	if (targetMenuId === invalidId) {
-		const searched = initSearched();
-		const topParent = findParent(searched, activeMenuId);
-		[currentSetting] = navigationData.filter(setting => setting.id === topParent);
-
-		if (currentSetting !== undefined && currentSetting.children.length > 0) {
-			drawerContents = [...currentSetting.children];
-			targetMenuId = activeMenuId;
-			drawerClassName += ` ${styles['open']}`;
-		}
-	} else {
-		if (isParent(hoverId, activeMenuId)) targetMenuId = activeMenuId;
-		[currentSetting] = navigationData.filter(setting => setting.id === hoverId);
-
-		if (currentSetting !== undefined) {
-			drawerContents = [...currentSetting.children];
-			drawerClassName += ` ${styles['open']}`;
-		}
+	[currentSetting] = navigationData.filter(setting => setting.id === hoverId);
+	if (currentSetting !== undefined) {
+		drawerContents = [...currentSetting.children];
+		drawerClassName += ` ${styles['open']}`;
 	}
 
 	return (
@@ -203,9 +128,7 @@ function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenu
 								<a
 									href={setting.path}
 									className={
-										(idTree[targetMenuId].includes(setting.id))
-											? `${styles['drawer-link']} ${styles['active']}`
-											: styles['drawer-link']
+										activeMenuId === setting.id ? `${styles['drawer-link']} ${styles['active']}` : styles['drawer-link']
 									}
 								>
 									<div className={styles['drawer-link-label']}>{setting.label}</div>
@@ -217,4 +140,20 @@ function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenu
 			</ul>
 		</div>
 	);
+}
+
+/**
+ * 各メニューの親を集める
+ */
+function collectParents(parent: number | null, settings: Setting[], result: Set<number>[]) {
+	for (let i = 0; i < settings.length; i++) {
+		if (result[settings[i].id] === undefined) result[settings[i].id] = new Set();
+
+		if (parent !== null) result[settings[i].id].add(parent);
+
+		if (settings[i].children.length > 0) {
+			collectParents(settings[i].id, settings[i].children, result);
+		}
+	}
+	return result;
 }
