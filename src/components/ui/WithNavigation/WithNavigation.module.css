@@ -1,9 +1,19 @@
+.navigation, .navigation-drawer, .main-content {
+    --navigation-rail-width: 88px;
+}
+
+.navigation-list, .main-content {
+    --gap-tb: 16px;
+}
+
 /**
  * ナビゲーションレール・ナビゲーションドロワー付きレイアウトのスタイル
 **/
 .main-content {
     min-height: 100%;
     flex-grow: 1;
+    padding-top: var(--gap-tb);
+    padding-left: var(--navigation-rail-width);
 }
 
 /* region ナビゲーションレール */
@@ -26,9 +36,8 @@
 }
 
 .navigation-list {
-    margin-left: 2px;
-    margin-right: 2px;
     padding: 0;
+    margin: var(--gap-tb) 2px;
 }
 
 .navigation-list-item {

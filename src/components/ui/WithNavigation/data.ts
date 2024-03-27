@@ -1,6 +1,5 @@
 import {Setting} from "./types";
 
-//@@todo idの取り扱いをなんとかしたい
 /**
  * ナビゲーションのデータ
  */

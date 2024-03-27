@@ -1,0 +1,12 @@
+.content-container {
+    padding: 0 16px;
+    min-height: 100%;
+}
+
+.f_source {
+    width: 100%;
+}
+
+.f_result {
+    width: 100%;
+}
