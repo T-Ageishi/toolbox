@@ -11,7 +11,7 @@ const convTypeOptionProps: OptionProps[] = [
 const charsetLabel = '変換前後の文字コード';
 const charsetSelectProps = {id: 'f_charset', name: 'f_charset'};
 const charsetOptionProps: OptionProps[] = [
-	{label: '指定しない（変換しない）', value: '1'}, {label: 'UTF-8', value: '2'},
+	{label: '変換しない', value: '1'}, {label: 'UTF-8', value: '2'},
 ];
 
 /**

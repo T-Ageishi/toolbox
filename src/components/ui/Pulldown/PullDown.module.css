@@ -1,5 +1,5 @@
 .pull-down-container {
-    --pull-down-min-width: 240px;
+    --pull-down-min-width: 120px;
 }
 
 .pull-down-container {
@@ -10,7 +10,7 @@
     display: block;
     width: 100%;
     min-width: var(--pull-down-min-width);
-    max-width: 320px;
+    max-width: 240px;
     height: 50px;
     margin: 5px 0;
     padding: 0 24px;
