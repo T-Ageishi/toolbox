@@ -2,6 +2,7 @@ import {Setting} from "./types";
 
 /**
  * ナビゲーションのデータ
+ * @@todo 別の場所に定義する
  */
 export const navigationData: Setting[] = [
 	{id: 1, label: 'ホーム', icon: 'Home', path: '/', children: []},

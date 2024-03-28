@@ -95,6 +95,11 @@ a {
     color: unset;
 }
 
+button {
+    cursor: pointer;
+    border: none;
+}
+
 .material-symbols-outlined {
     font-variation-settings: 'FILL' 0,
     'wght' 400,

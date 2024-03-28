@@ -1,0 +1,24 @@
+/* region 検索条件 */
+.condition-container {
+    display: flex;
+    column-gap: 24px;
+}
+
+/* endregion 検索条件 */
+
+/* region テキストエリア系 */
+.f_source {
+    width: 100%;
+}
+
+.f_result {
+    width: 100%;
+}
+
+.triangle-icon-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* endregion テキストエリア系 */
