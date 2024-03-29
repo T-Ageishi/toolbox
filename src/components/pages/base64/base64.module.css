@@ -15,6 +15,10 @@
     width: 100%;
 }
 
+.f-result:hover {
+    cursor: pointer;
+}
+
 .triangle-icon-line {
     align-items: center;
     display: flex;
