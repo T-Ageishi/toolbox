@@ -1,5 +1,5 @@
-import WithNavigation from "./../components/ui/WithNavigation/WithNavigation";
-import {MENU_ID_HOME} from "@/components/ui/WithNavigation/data";
+import WithNavigation from "@/components/ui/with_navigation/with_navigation";
+import {MENU_ID_HOME} from "@/components/ui/with_navigation/data";
 
 export default function Home() {
 	return (

@@ -1,7 +1,7 @@
 'use client';
-import styles from "./WithNavigation.module.css";
+import styles from "./with_navigation.module.css";
 import React, {Fragment, useState} from "react";
-import {throttle} from "./../../util/throttle";
+import {throttle} from "@/components/utils/throttle";
 import {Setting, MouseEnterHandlerType, MouseMoveHandlerType} from './types';
 import {navigationData} from './data';
 
@@ -84,8 +84,7 @@ function NavigationBody({
 								onMouseEnter={() => handleMouseEnter(setting.id)}
 							>
 								<a className={styles['navigation-link']} href={setting.path}>
-									<div
-										className={`${styles['navigation-link-icon']} material-symbols-outlined`}>{setting.icon}</div>
+									<div className={`${styles['navigation-link-icon']} material-symbols-outlined`}>{setting.icon}</div>
 									<div className={styles['navigation-link-label']}>{setting.label}</div>
 								</a>
 							</li>
