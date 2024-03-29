@@ -4,7 +4,7 @@ import {lang} from "@/components/lang/lang";
 
 export default function ExecButton({onClick}: ButtonProps) {
 	return (
-		<PrimaryButton size={'large'} onClick={onClick}>
+		<PrimaryButton size={'l'} onClick={onClick}>
 			{
 				lang('0007')//変換
 			}

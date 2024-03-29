@@ -1,12 +1,16 @@
 /*@@todo サイズ*/
 .primary-button {
-    --height-large: 80px;
-    --side-margin-large: 48px;
-    --side-margin-medium: 24px;
-
     --height-medium: 40px;
-    --min-width-large: 240px;
+    --height-large: 80px;
+
+    --side-margin-medium: 24px;
+    --side-margin-large: 48px;
+
     --min-width-medium: 120px;
+    --min-width-large: 240px;
+
+    --border-radius-medium: 24px;
+    --border-radius-large: 48px;
 }
 
 .primary-button {
@@ -18,6 +22,7 @@
     min-width: var(--min-width-medium);
     padding-left: var(--side-margin-medium);
     padding-right: var(--side-margin-medium);
+    border-radius: var(--border-radius-medium);
 }
 
 .primary-button.large {
@@ -25,4 +30,5 @@
     min-width: var(--min-width-large);
     padding-left: var(--side-margin-large);
     padding-right: var(--side-margin-large);
+    border-radius: var(--border-radius-large);
 }
