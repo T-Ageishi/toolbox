@@ -6,15 +6,15 @@ import React, {ChangeEventHandler, useState} from "react";
 
 const minRow: number = 8;
 const sourceTextareaPropsBase: TextareaProps = {
-	className: styles['f_source'],
-	id: 'f_source',
-	name: 'f_source',
+	className: styles['f-source'],
+	id: 'f-source',
+	name: 'f-source',
 	rows: minRow,
 };
 const resultTextareaPropsBase: TextareaProps = {
-	className: styles['f_result'],
-	id: 'f_result',
-	name: 'f_result',
+	className: styles['f-result'],
+	id: 'f-result',
+	name: 'f-result',
 	rows: minRow,
 	readOnly: true,
 };
