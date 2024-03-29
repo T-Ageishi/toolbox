@@ -1,6 +1,6 @@
-import {TextareaProps} from "@/components/ui/VerticalTextarea/types";
+import {TextareaProps} from "@/components/utils/types/html_props";
 import styles from './base64.module.css';
-import VerticalTextarea from "@/components/ui/VerticalTextarea/VerticalTextarea";
+import VerticalTextarea from "@/components/ui/vertical_textarea/vertical_textarea";
 import Image from "next/image";
 import React, {ChangeEventHandler, useState} from "react";
 

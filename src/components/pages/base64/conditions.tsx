@@ -1,5 +1,5 @@
-import PullDown from "@/components/ui/Pulldown/PullDown";
-import {OptionProps, SelectProps} from "@/components/ui/Pulldown/types";
+import PullDown from "@/components/ui/pull_down/pull_down";
+import {OptionProps, SelectProps} from "@/components/utils/types/html_props";
 import styles from './base64.module.css';
 
 const convTypeLabel = '変換方式';

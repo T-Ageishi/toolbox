@@ -1,4 +1,4 @@
-import PrimaryButton from "@/components/ui/PrimaryButton/PrimaryButton";
+import PrimaryButton from "@/components/ui/primary_button/primary_button";
 
 export default function ExecButton() {
 	return (

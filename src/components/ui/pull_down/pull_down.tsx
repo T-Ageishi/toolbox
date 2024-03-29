@@ -1,5 +1,5 @@
-import styles from './PullDown.module.css';
-import {LabelProps, OptionProps, SelectProps} from "@/components/ui/Pulldown/types";
+import styles from './pull_down.module.css';
+import {LabelProps, OptionProps, SelectProps} from "@/components/utils/types/html_props";
 import React from "react";
 
 

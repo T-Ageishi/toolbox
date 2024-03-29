@@ -1,7 +1,7 @@
-import styles from './PrimaryButton.module.css';
+import styles from './primary_button.module.css';
 import {PrimaryButtonProps} from './types';
 import React from "react";
-import {mergeClassNames} from "@/components/utils/mergeClassNames";
+import {mergeClassNames} from "@/components/utils/merge_class_names";
 
 const defaultClassNames = ['primary-button'].map(cn => styles[cn]);
 

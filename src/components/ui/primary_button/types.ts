@@ -1,4 +1,4 @@
-import {ButtonProps} from "@/components/utils/types/htmlProps";
+import {ButtonProps} from "@/components/utils/types/html_props";
 
 export interface PrimaryButtonProps extends ButtonProps {
 	size?: 'medium' | 'large';

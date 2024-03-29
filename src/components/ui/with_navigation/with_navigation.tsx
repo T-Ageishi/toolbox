@@ -1,5 +1,5 @@
 'use client';
-import styles from "./WithNavigation.module.css";
+import styles from "./with_navigation.module.css";
 import React, {Fragment, useState} from "react";
 import {throttle} from "@/components/utils/throttle";
 import {Setting, MouseEnterHandlerType, MouseMoveHandlerType} from './types';

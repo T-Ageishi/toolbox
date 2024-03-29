@@ -1,7 +1,7 @@
-import styles from './VerticalTextarea.module.css';
+import styles from './vertical_textarea.module.css';
 import React from 'react';
-import {TextareaProps} from './types';
-import {mergeClassNames} from "@/components/utils/mergeClassNames";
+import {TextareaProps} from '@/components/utils/types/html_props';
+import {mergeClassNames} from "@/components/utils/merge_class_names";
 
 const defaultClassNames: string[] = ['resize-vertical'].map(cn => styles[cn]);
 

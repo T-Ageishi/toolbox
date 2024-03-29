@@ -1,10 +1,10 @@
 'use client';
-import WithNavigation from "./../../../components/ui/WithNavigation/WithNavigation";
-import {MENU_ID_BASE64} from "@/components/ui/WithNavigation/data";
+import WithNavigation from "@/components/ui/with_navigation/with_navigation";
+import {MENU_ID_BASE64} from "@/components/ui/with_navigation/data";
 import styles from './page.module.css';
-import TextContents from "@/components/pages/base64/TextContents";
-import Conditions from "@/components/pages/base64/Conditions";
-import ExecButton from "@/components/pages/base64/ExecButton";
+import TextContents from "@/components/pages/base64/text_contents";
+import Conditions from "@/components/pages/base64/conditions";
+import ExecButton from "@/components/pages/base64/exec_button";
 import React, {useState} from "react";
 
 
