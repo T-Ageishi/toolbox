@@ -1,7 +1,7 @@
 /**
  * 言語データ本体
  */
-const langData: {[key: string] : string;} = {
+const langData: { [key: string]: string; } = {
 	'0001': '変換方式',
 	'0002': 'エンコード',
 	'0003': 'デコード',
@@ -11,8 +11,9 @@ const langData: {[key: string] : string;} = {
 	'0007': '変換',
 	'0008': 'ホーム',
 	'0009': '開発',
-	'0010' : 'base64 encode/decode',
+	'0010': 'base64 encode/decode',
 	'0011': 'PHP serialize/unserialize',
+	'0012': 'クリックして値をコピーできます。',
 };
 
 /**

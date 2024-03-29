@@ -2,18 +2,18 @@ import {TextareaProps} from "@/components/utils/types/html_props";
 import styles from './base64.module.css';
 import VerticalTextarea from "@/components/ui/vertical_textarea/vertical_textarea";
 import Image from "next/image";
-import React, {ChangeEventHandler} from "react";
+import React from "react";
 
 const minRow: number = 8;
 //変換前
-const sourceTextareaPropsBase: TextareaProps = {
+const sourceDefaultProps: TextareaProps = {
 	className: styles['f-source'],
 	id: 'f-source',
 	name: 'f-source',
 	rows: minRow,
 };
 //変換後
-const resultTextareaPropsBase: TextareaProps = {
+const resultDefaultProps: TextareaProps = {
 	className: styles['f-result'],
 	id: 'f-result',
 	name: 'f-result',
@@ -24,19 +24,14 @@ const resultTextareaPropsBase: TextareaProps = {
 /**
  * テキストエリア部分のコンテンツ
  */
-export default function TextContents({
-	sourceValue, handleSourceInput, resultValue
-}: {
-	sourceValue: string; handleSourceInput: ChangeEventHandler<HTMLTextAreaElement>; resultValue: string;
+export default function TextContents({sourceProps, resultProps}: {
+	sourceProps: TextareaProps;
+	resultProps: TextareaProps;
 }) {
 	//変換前
-	const sourceTextareaProps: TextareaProps = {
-		...sourceTextareaPropsBase,
-		value: sourceValue,
-		onChange: handleSourceInput
-	};
+	const sourceTextareaProps: TextareaProps = {...sourceDefaultProps, ...sourceProps};
 	//変換後
-	const resultTextareaProps: TextareaProps = {...resultTextareaPropsBase, value: resultValue};
+	const resultTextareaProps: TextareaProps = {...resultDefaultProps, ...resultProps};
 
 	return (
 		<div>
