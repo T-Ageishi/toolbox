@@ -7,11 +7,11 @@
 /* endregion 検索条件 */
 
 /* region テキストエリア系 */
-.f_source {
+.f-source {
     width: 100%;
 }
 
-.f_result {
+.f-result {
     width: 100%;
 }
 
