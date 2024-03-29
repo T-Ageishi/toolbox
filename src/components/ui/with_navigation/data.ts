@@ -1,15 +1,16 @@
 import {Setting} from "./types";
+import {lang} from "@/components/lang/lang";
 
 /**
  * ナビゲーションのデータ
- * @@todo 別の場所に定義する
  */
 export const navigationData: Setting[] = [
-	{id: 1, label: 'ホーム', icon: 'Home', path: '/', children: []},
+	//@@todo 別の場所に定義する
+	{id: 1, label: lang('0008'), icon: 'Home', path: '/', children: []},//ホーム
 	{
-		id: 2, label: '開発', icon: 'Code', path: '/development', children: [
-			{id: 3, label: 'base64 encode/decode', icon: '', path: '/development/base64', children: []},
-			{id: 4, label: 'PHP serialize/unserialize', icon: '', path: '/development/serialize', children: []},
+		id: 2, label: lang('0009'), icon: 'Code', path: '/development', children: [//開発
+			{id: 3, label: lang('0010'), icon: '', path: '/development/base64', children: []},//base64 encode/decode
+			{id: 4, label: lang('0011'), icon: '', path: '/development/serialize', children: []},//PHP serialize/unserialize
 		]
 	},
 ];

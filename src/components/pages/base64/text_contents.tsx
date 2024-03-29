@@ -38,7 +38,7 @@ export default function TextContents() {
 			<VerticalTextarea {...sourceTextareaProps}/>
 			<div className={styles['triangle-icon-line']}>
 				<Image
-					src='/triangle-down-outline.svg'
+					src='/triangle_down_outline.svg'
 					width={64}
 					height={64}
 					alt={'sample'}

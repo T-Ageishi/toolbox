@@ -1,17 +1,17 @@
 /*@@todo サイズ*/
 .primary-button {
-    --height-medium: 40px;
-    --min-width-medium: 120px;
+    --height-large: 80px;
+    --side-margin-large: 48px;
     --side-margin-medium: 24px;
 
-    --height-large: 80px;
+    --height-medium: 40px;
     --min-width-large: 240px;
-    --side-margin-large: 48px;
+    --min-width-medium: 120px;
 }
 
 .primary-button {
-    color: var(--theme-color-on-primary);
     background-color: var(--theme-color-primary);
+    color: var(--theme-color-on-primary);
     font-weight: 700;
 
     height: var(--height-medium);

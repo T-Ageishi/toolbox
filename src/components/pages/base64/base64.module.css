@@ -1,7 +1,7 @@
 /* region 検索条件 */
 .condition-container {
-    display: flex;
     column-gap: 24px;
+    display: flex;
 }
 
 /* endregion 検索条件 */
@@ -16,9 +16,9 @@
 }
 
 .triangle-icon-line {
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 /* endregion テキストエリア系 */
