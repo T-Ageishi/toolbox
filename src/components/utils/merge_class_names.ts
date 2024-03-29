@@ -1,5 +1,4 @@
-import clsx from "clsx";
-import {ClassValue} from 'clsx';
+import clsx, {ClassValue} from "clsx";
 
 /**
  * クラス名をマージ

@@ -1,7 +1,10 @@
 /**
+ * <pre>
  * throttle
- * 一定の間隔で処理を実行する。呼び出された関数の実行を一定時間あたり一回に間引く。
+ * 一定の間隔で処理を実行する。
+ * 呼び出された関数の実行を一定時間あたり一回に間引く。
  * https://www.webdesignleaves.com/pr/jquery/debounce-and-throttle.html
+ * </pre>
  */
 export function throttle(fn: Function, wait: number = 100): Function {
 	let isWaiting = false;
