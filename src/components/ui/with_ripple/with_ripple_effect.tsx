@@ -1,11 +1,11 @@
 import styles from './with_ripple.module.css';
-import React, {ComponentType, FC, MouseEventHandler} from "react";
+import React, {ComponentType, FC} from "react";
 import {ButtonProps} from "@/components/utils/types/html_props";
 import {mergeClassNames} from "@/components/utils/merge_class_names";
 
 //@@todo リファクタリングしたい
 interface WithRippleEffectProps extends ButtonProps {
-	handleRipple: MouseEventHandler;
+	handleRipple: React.MouseEventHandler;
 }
 
 /**

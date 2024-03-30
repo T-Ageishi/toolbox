@@ -5,7 +5,7 @@ import styles from './page.module.css';
 import TextContents from "@/components/pages/base64/text_contents";
 import Conditions from "@/components/pages/base64/conditions";
 import ExecButton from "@/components/pages/base64/exec_button";
-import {ChangeEventHandler, MouseEventHandler, useState} from "react";
+import React, {useState} from "react";
 import {base64Decode, base64Encode} from "@/components/utils/base64";
 import {lang} from "@/components/lang/lang";
 
@@ -20,18 +20,19 @@ export default function Base64() {
 	const [sourceValue, setSourceValue] = useState<string>('');
 	const [resultValue, setResultValue] = useState<string>('');
 
-	const handleConvTypeChange: ChangeEventHandler<HTMLSelectElement> = e => {
+	const handleConvTypeChange: React.ChangeEventHandler<HTMLSelectElement> = e => {
 		setSourceValue('');
 		setConvType(e.target.value);
 	};
-	const handleCharsetChange: ChangeEventHandler<HTMLSelectElement> = e => setCharset(e.target.value);
-	const handleSourceInput: ChangeEventHandler<HTMLTextAreaElement> = e => setSourceValue(e.target.value);
-	const handleResultAreaClick: MouseEventHandler<HTMLTextAreaElement> = e => {
+	const handleCharsetChange: React.ChangeEventHandler<HTMLSelectElement> = e => setCharset(e.target.value);
+	const handleSourceInput: React.ChangeEventHandler<HTMLTextAreaElement> = e => setSourceValue(e.target.value);
+	const handleResultAreaClick: React.MouseEventHandler<HTMLTextAreaElement> = e => {
 		window.navigator.clipboard.writeText(e.currentTarget.value).catch(reason => console.error(reason));
 	};
 
 	//base64 変換入口
 	const execBase64 = () => {
+		//@@todo 一瞬マジックナンバーかもしれない
 		if (convType === '1') setResultValue(base64Encode(sourceValue));
 		if (convType === '2') setResultValue(base64Decode(sourceValue));
 	};
