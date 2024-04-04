@@ -27,7 +27,7 @@ export default function WithNavigation({children, activeMenuId}: { children: Rea
 	const handlePointerMove: MouseMoveHandlerType = event => {
 		throttle(() => {
 			const containerSelector = '.navigation-container';
-			const target = event.target as HTMLElement;
+			const target = event.target as HTMLElement;//@@todo as 直したい
 			const elm = target.closest(containerSelector);
 			if (elm === null) setHoverId(invalidId);
 		}, 500)();
