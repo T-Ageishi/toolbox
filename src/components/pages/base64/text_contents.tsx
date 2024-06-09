@@ -1,50 +1,51 @@
-import {TextareaProps} from "@/components/utils/types/html_props";
+import React from 'react';
+import Textarea from '@/app/_ui/textarea/textarea';
+import WithLabel from '@/app/_ui/with_label/with_label';
+import Image from 'next/image';
+import { TextareaProps } from '@/app/_ui/textarea/textarea.types';
 import styles from './base64.module.css';
-import VerticalTextarea from "@/components/ui/vertical_textarea/vertical_textarea";
-import Image from "next/image";
-import React from "react";
+import { lang } from '@/lib/lang/lang';
 
-const minRow: number = 8;
 //変換前
 const sourceDefaultProps: TextareaProps = {
-	className: styles['f-source'],
-	id: 'f-source',
-	name: 'f-source',
-	rows: minRow,
+  id: 'f-source',
+  name: 'f-source',
+  className: styles['f-source'],
 };
 //変換後
 const resultDefaultProps: TextareaProps = {
-	className: styles['f-result'],
-	id: 'f-result',
-	name: 'f-result',
-	rows: minRow,
-	readOnly: true,
+  id: 'f-result',
+  name: 'f-result',
+  className: styles['f-result'],
+  readOnly: true,
 };
 
 /**
  * テキストエリア部分のコンテンツ
  */
-export default function TextContents({sourceProps, resultProps}: {
-	sourceProps: TextareaProps;
-	resultProps: TextareaProps;
+export default function TextContents ({sourceProps, resultProps}: {
+  sourceProps: TextareaProps;
+  resultProps: TextareaProps;
 }) {
-	//変換前
-	const sourceTextareaProps: TextareaProps = {...sourceDefaultProps, ...sourceProps};
-	//変換後
-	const resultTextareaProps: TextareaProps = {...resultDefaultProps, ...resultProps};
+  const sourceTextareaProps: TextareaProps = {...sourceDefaultProps, ...sourceProps};
+  const resultTextareaProps: TextareaProps = {...resultDefaultProps, ...resultProps};
 
-	return (
-		<div>
-			<VerticalTextarea {...sourceTextareaProps}/>
-			<div className={styles['triangle-icon-line']}>
-				<Image
-					src='/triangle_down_outline.svg'
-					width={64}
-					height={64}
-					alt={'sample'}
-				/>
-			</div>
-			<VerticalTextarea {...resultTextareaProps}/>
-		</div>
-	);
+  return (
+    <div>
+      <WithLabel label={lang('0015')} htmlFor={'f-source'}>
+        <Textarea {...sourceTextareaProps}/>
+      </WithLabel>
+      <div className={styles['triangle-icon-line']}>
+        <Image
+          src="/triangle_down_outline.svg"
+          width={64}
+          height={64}
+          alt={'sample'}
+        />
+      </div>
+      <WithLabel label={lang('0016')} htmlFor={'f-result'}>
+        <Textarea {...resultTextareaProps}/>
+      </WithLabel>
+    </div>
+  );
 }

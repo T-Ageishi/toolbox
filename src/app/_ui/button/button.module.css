@@ -1,0 +1,46 @@
+button {
+    --height-medium: 40px;
+    --side-padding-medium: 24px;
+    --border-radius-medium: 24px;
+}
+
+/* 種別 */
+.button-filled {
+    font-weight: 700;
+    color: var(--md-sys-color-on-primary);
+    background-color: var(--md-sys-color-primary);
+}
+
+.button-tonal {
+    font-weight: 400;
+    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--md-sys-color-secondary-container);
+}
+
+.button-outlined {
+    font-weight: 400;
+    color: var(--md-sys-color-primary);
+    outline: 1px solid var(--md-sys-color-outline);
+    background-color: var(--md-sys-color-surface);
+}
+
+.button-danger {
+    font-weight: 700;
+    color: var(--md-sys-color-on-error);
+    background-color: var(--md-sys-color-error);
+}
+
+/* サイズ */
+.button-medium {
+    font-size: var(--text-md);
+    height: var(--height-medium);
+    padding: 0 var(--side-padding-medium);
+    border-radius: var(--border-radius-medium);
+}
+
+.button-large {
+    font-size: var(--text-xl);
+    height: calc(var(--height-medium) * 2);
+    padding: 0 calc(var(--side-padding-medium) * 2);
+    border-radius: calc(var(--border-radius-medium) * 2);
+}

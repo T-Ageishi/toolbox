@@ -1,0 +1,25 @@
+.navigation-rail {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: var(--navigation-rail-width);
+    height: 100%;
+    padding: 20px 0;
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface-container);
+}
+
+.navigation-rail-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    row-gap: 14px;
+}
+
+.navigation-rail-footer {
+    display: flex;
+    flex-direction: column-reverse;
+}
