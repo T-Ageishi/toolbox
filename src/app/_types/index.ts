@@ -5,6 +5,7 @@ export type Setting = {
   id: number;
   label: string;
   icon?: keyof typeof Icons;
+  activeIcon?: keyof typeof Icons;
   path: string;
   children: Setting[];
 };
