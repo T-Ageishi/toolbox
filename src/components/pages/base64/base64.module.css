@@ -4,6 +4,14 @@
     display: flex;
 }
 
+/*@@todo メディアクエリ書き換え*/
+@media screen and (max-width: 768px) {
+    .condition-container {
+        flex-direction: column;
+        column-gap: unset;
+    }
+}
+
 /* endregion 検索条件 */
 
 /* region テキストエリア系 */
