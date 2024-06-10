@@ -2,7 +2,7 @@
 import styles from './with_navigation.module.css';
 import React, { Fragment, useState } from 'react';
 import { throttle } from '@/app/_ui/_lib/throttle';
-import { Setting, MouseEnterHandlerType, MouseMoveHandlerType } from './types';
+import { Setting, MouseEnterHandlerType, MouseMoveHandlerType } from '@/app/_types';
 import { navigationData } from './data';
 
 //初期化したりする用のメニューID
@@ -12,7 +12,10 @@ const parents = collectParents(null, navigationData, []);
 /**
  * ナビゲーションドロワー付きのレイアウト
  */
-export default function WithNavigation({children, activeMenuId}: { children: React.ReactNode; activeMenuId: number; }) {
+export default function WithNavigation ({children, activeMenuId}: {
+  children: React.ReactNode;
+  activeMenuId: number;
+}) {
   const [hoverId, setHoverId] = useState(invalidId);
 
   //ナビゲーションのリンクにポインターが重なったときのイベントハンドラ
@@ -57,14 +60,14 @@ export default function WithNavigation({children, activeMenuId}: { children: Rea
 /**
  * ナビゲーションのヘッダー
  */
-function NavigationHeader(): React.ReactNode {
+function NavigationHeader (): React.ReactNode {
   return <div className={styles['navigation-header']}></div>;
 }
 
 /**
  * ナビゲーションのボディ
  */
-function NavigationBody({
+function NavigationBody ({
   settings, activeMenuId, handleMouseEnter,
 }: {
   settings: Setting[]; activeMenuId: number; handleMouseEnter: MouseEnterHandlerType;
@@ -99,14 +102,14 @@ function NavigationBody({
 /**
  * ナビゲーションのフッター
  */
-function NavigationFooter(): React.ReactNode {
+function NavigationFooter (): React.ReactNode {
   return <div className="navigation-footer"></div>;
 }
 
 /**
  * ナビゲーションドロワー
  */
-function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenuId: number; }): React.ReactNode {
+function NavigationDrawer ({hoverId, activeMenuId}: { hoverId: number; activeMenuId: number; }): React.ReactNode {
   let drawerClassName = styles['navigation-drawer'];
   let drawerContents: Setting[] = [];
   let currentSetting: Setting | undefined;
@@ -144,7 +147,7 @@ function NavigationDrawer({hoverId, activeMenuId}: { hoverId: number; activeMenu
 /**
  * 各メニューの親を集める
  */
-function collectParents(parent: number | null, settings: Setting[], result: Set<number>[]) {
+function collectParents (parent: number | null, settings: Setting[], result: Set<number>[]) {
   for (let i = 0; i < settings.length; i++) {
     if (result[settings[i].id] === undefined) result[settings[i].id] = new Set();
 

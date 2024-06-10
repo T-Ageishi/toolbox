@@ -1,4 +1,5 @@
 import * as Icons from '@mui/icons-material';
+import React from 'react';
 
 export type Setting = {
   id: number;
@@ -7,3 +8,7 @@ export type Setting = {
   path: string;
   children: Setting[];
 };
+
+export type MouseEnterHandlerType = (id: number) => void;
+
+export type MouseMoveHandlerType = (event: React.MouseEvent<HTMLElement>) => void;
