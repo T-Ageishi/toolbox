@@ -1,0 +1,13 @@
+.drawer-item {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    height: 48px;
+    cursor: pointer;
+    padding: 2px 16px;
+}
+.drawer-item-icon {
+    margin-right: 16px;
+}
+.drawer-item-label {
+}
