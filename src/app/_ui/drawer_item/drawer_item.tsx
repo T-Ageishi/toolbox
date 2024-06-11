@@ -9,27 +9,7 @@ export default function DrawerItem ({setting, isActive}: { setting: Setting; isA
   const level = getLevel(setting);
 
   if (level <= 1) {
-    let Icon;
-    if (isActive) {
-      Icon = setting.activeIcon ? Icons[setting.activeIcon] : null;
-    }
-    if (!Icon) {
-      Icon = setting.icon ? Icons[setting.icon] : null;
-    }
-    const ArrowForward = setting.children.length === 0 ? null : Icons['ArrowForward'];
-
-    return (
-      <div className={mergeClassNames([
-        `${styles['drawer-item']}`,
-        {
-          [`${styles['active']}`]: isActive,
-        },
-      ])}>
-        {Icon ? <Icon className={`${styles['drawer-item-icon']}`}/> : <></>}
-        <div className={`${styles['drawer-item-label']}`}>{setting.label}</div>
-        {ArrowForward ? <ArrowForward className={`${styles['drawer-item-arrow-icon']}`}/> : <></>}
-      </div>
-    );
+    return <TopLevel setting={setting} isActive={isActive} />;
   }
 
   return (
@@ -37,3 +17,26 @@ export default function DrawerItem ({setting, isActive}: { setting: Setting; isA
   );
 }
 
+function TopLevel({setting, isActive}: { setting: Setting; isActive: boolean; }){
+  let Icon;
+  if (isActive) {
+    Icon = setting.activeIcon ? Icons[setting.activeIcon] : null;
+  }
+  if (!Icon) {
+    Icon = setting.icon ? Icons[setting.icon] : null;
+  }
+  const ArrowForward = setting.children.length === 0 ? null : Icons['ArrowForward'];
+
+  return (
+    <div className={mergeClassNames([
+      `${styles['drawer-item']}`,
+      {
+        [`${styles['active']}`]: isActive,
+      },
+    ])}>
+      {Icon ? <Icon className={`${styles['drawer-item-icon']}`}/> : <></>}
+      <div className={`${styles['drawer-item-label']}`}>{setting.label}</div>
+      {ArrowForward ? <ArrowForward className={`${styles['drawer-item-arrow-icon']}`}/> : <></>}
+    </div>
+  );
+}
