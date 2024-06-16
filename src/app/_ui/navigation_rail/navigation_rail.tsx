@@ -2,7 +2,7 @@
 
 import styles from '@/app/_ui/navigation_rail/navigation_rail.module.css';
 import { NavigationRailProps } from '@/app/_ui/navigation_rail/navigation_rail.types';
-import NavigationLink from '@/app/_ui/navigation_link/navigation_link';
+import NavigationContent from '@/app/_ui/navigation_content/navigation_content';
 import { Setting } from '@/app/_types';
 import { Fragment } from 'react';
 import { usePathname } from 'next/navigation';
@@ -25,7 +25,7 @@ function Body ({settings, pathname}: { settings: Setting[]; pathname: string; })
       {
         settings.map(setting => (
           <Fragment key={setting.id}>
-            <NavigationLink setting={setting} isActive={isActive(pathname, setting.path)}/>
+            <NavigationContent setting={setting} isActive={isActive(pathname, setting.path)}/>
           </Fragment>
         ))
       }

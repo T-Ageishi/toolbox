@@ -1,5 +1,3 @@
-import TemplateMaker from "@/components/pages/template_maker/page";
-
-export default function Page() {
-  return <TemplateMaker></TemplateMaker>;
+export default function Page () {
+  return <h1>Template Maker</h1>;
 }
