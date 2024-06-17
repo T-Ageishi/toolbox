@@ -1,9 +1,14 @@
-import { Noto_Sans_JP } from 'next/font/google';
+import { Noto_Sans_JP, Oswald } from 'next/font/google';
 
 /**
  * フォント定義ファイル
  */
 export const notoSansJP = Noto_Sans_JP({
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['100', '200', '300', '400', '700'],
+});
+
+export const oswald = Oswald({
+  subsets: ['latin'],
+  weight: ['500'],
 });

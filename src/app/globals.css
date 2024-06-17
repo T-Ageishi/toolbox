@@ -4,6 +4,7 @@
     --navigation-rail-width: 88px;
     /* フォントサイズ */
     --text-xs: 0.75rem;
+    --text-s: 0.85rem;
     --text-md: 1rem;
     --text-xl: 1.25rem;
     /* elevation */
@@ -130,12 +131,20 @@ html {
 
 body {
     height: 100%;
-    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-background);
+    background-color: var(--md-sys-color-background);
 }
 
 #root {
     display: flex;
     height: 100%;
+}
+
+.page-main-content {
+    flex-grow: 1;
+    min-height: 100%;
+    margin-left: var(--navigation-rail-width);
+    padding: 8px;
 }
 
 ul {
