@@ -1,0 +1,10 @@
+.main {
+    display: grid;
+    margin-top: 16px;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: 200px;
+}
+
+.card-wrapper {
+    display: block;
+}

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import NavigationRail from '@/app/_ui/navigation_rail/navigation_rail';
-import { navigationData } from '@/components/ui/with_navigation/data';
+import { navigationData } from '@/app/_ui/_lib/navigation/data';
 
 const meta: Meta<typeof NavigationRail> = {
   title: 'Navigation Rail',
@@ -30,7 +30,7 @@ export const Others: Story = {
     nextjs: {
       appDirectory: true,
       navigation: {
-        pathname: '/development/base64',
+        pathname: '/work/template_maker',
       },
     },
   },

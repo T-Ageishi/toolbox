@@ -1,10 +1,9 @@
-import React from "react";
-import Base64 from "@/components/pages/base64/page";
+import React from 'react';
 
 
 /**
  * base64
  */
-export default function Page() {
-  return <Base64></Base64>;
+export default function Page () {
+  return <h1>Base64</h1>;
 }

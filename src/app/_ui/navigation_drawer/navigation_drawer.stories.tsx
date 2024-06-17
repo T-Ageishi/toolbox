@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { navigationData } from '@/components/ui/with_navigation/data';
+import { navigationData } from '@/app/_ui/_lib/navigation/data';
 import NavigationDrawer from '@/app/_ui/navigation_drawer/navigation_drawer';
 
 const meta: Meta<typeof NavigationDrawer> = {
