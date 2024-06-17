@@ -1,0 +1,32 @@
+.container {
+    width: 100%;
+    padding: 8px 16px 16px;
+    border-radius: 12px;
+    background-color: var(--md-sys-color-surface-container-high);
+}
+
+.elevated {
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.35);
+}
+
+.filled {
+}
+
+.outlined {
+}
+
+
+.headline {
+    font-size: 24px;
+    color: var(--md-sys-color-primary);
+}
+
+.subhead {
+    font-size: var(--text-md);
+    font-weight: normal;
+}
+
+.supportingText {
+    font-size: var(--text-s);
+    color: var(--md-sys-color-on-surface-variant);
+}
